@@ -134,24 +134,30 @@ def main():
     import os
 
     ### ANOTHER WAY TO LOAD CUSTOM PROFILES
-    #profile = None
+    profile = None
     #if args.fit_profile != 'None':
-    #    f = args.fit_profile.split('.py')[0]
-    #    profile = __import__(f)
-    #if profile is not None:
-    #    optimizer = pp.generate_optimizer()
-    #    optimizer, sols, out_dico = profile.CustomProfile(pp._raw_config.dict(), planet, star, optimizer, 
-    #                                        parser=pp, show_params= args.fitparams)
-
-    if os.path.splitext(os.path.basename(args.fit_profile))[1] == 'py':
-        dirname = os.path.dirname(args.fit_profile)
-        file_name = os.path.splitext(os.path.basename(args.fit_profile))[0]
-        import sys
-        sys.path.insert(1, dirname)
-        from file_name import CustomProfile
+    #    f = str(args.fit_profile).split('.py')
+    #    print(f[0])
+    #    profile = __import__(f[0])
+    if args.fit_profile != 'None':
+        import importlib
+        spec = importlib.util.spec_from_file_location("CustomProfile", args.fit_profile)
+        profile = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(profile)
+    if profile is not None:
         optimizer = pp.generate_optimizer()
-        optimizer, sols, out_dico = CustomProfile(pp._raw_config.dict(), planet, star, optimizer, 
+        optimizer, sols, out_dico = profile.CustomProfile(pp._raw_config.dict(), planet, star, optimizer, 
                                             parser=pp, show_params= args.fitparams)
+
+    #if os.path.splitext(os.path.basename(args.fit_profile))[1] == 'py':
+    #    dirname = os.path.dirname(args.fit_profile)
+    #    file_name = os.path.splitext(os.path.basename(args.fit_profile))[0]
+    #    import sys
+    #    sys.path.insert(1, dirname)
+    #    from file_name import CustomProfile
+    #    optimizer = pp.generate_optimizer()
+    #    optimizer, sols, out_dico = CustomProfile(pp._raw_config.dict(), planet, star, optimizer, 
+    #                                        parser=pp, show_params= args.fitparams)
     else:
         # Get the pipeline up
         observation = pp.generate_pipeline()

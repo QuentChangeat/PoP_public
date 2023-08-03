@@ -1,7 +1,7 @@
 from pathlib import Path
 import numpy as np
 
-def HSTSpectrePhaseProfile(config, planet=None, star=None, optimizer=None, model=None, observations=None, parser=None, show_params=False, phasecurve=True):
+def CustomProfile(config, planet=None, star=None, optimizer=None, model=None, observations=None, parser=None, show_params=False, phasecurve=True):
     
     filepath = config['Observation']['iraclis_file']
     div_white = False

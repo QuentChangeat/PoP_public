@@ -103,8 +103,8 @@ class PhaseOrbitalModel(ForwardModel):
         self.rpbounds = bounds or self._default_rp2_bounds
         for idx, val in enumerate(self.list_rp_rs2):
             point_num = idx+1
-            param_name = 'rp_rs2_{}'.format(point_num)
-            param_latex = '$rp_rs2_{}$'.format(point_num)
+            param_name = 'rp_rs2_w{}'.format(point_num)
+            param_latex = '$rp_rs2_w{}$'.format(point_num)
 
             def read_point(self, idx=idx):
                 return self.list_rp_rs2[idx]
@@ -123,8 +123,8 @@ class PhaseOrbitalModel(ForwardModel):
         self.fpbounds = bounds or self._default_fp_bounds
         for idx, val in enumerate(self.list_fp_fs):
             point_num = idx+1
-            param_name = 'fp_fs_{}'.format(point_num)
-            param_latex = '$fp_fs_{}$'.format(point_num)
+            param_name = 'fp_fs_w{}'.format(point_num)
+            param_latex = '$fp_fs_w{}$'.format(point_num)
 
             def read_point(self, idx=idx):
                 return self.list_fp_fs[idx]
@@ -148,42 +148,42 @@ class PhaseOrbitalModel(ForwardModel):
                 return self.list_c0[idx]
             def write_point_c0(self, value, idx=idx):
                 self.list_c0[idx] = value
-            self.add_fittable_param('c0_{}'.format(idx+1), '$c0_{}$'.format(idx+1), read_point_c0,
-                                    write_point_c0, 'log', False, self.cppmbounds)
+            self.add_fittable_param('c0_w{}'.format(idx+1), '$c0_w{}$'.format(idx+1), read_point_c0,
+                                    write_point_c0, 'linear', False, self.cppmbounds)
             
             def read_point_c1(self, idx=idx):
                 return self.list_c1[idx]
             def write_point_c1(self, value, idx=idx):
                 self.list_c1[idx] = value
-            self.add_fittable_param('c1_{}'.format(idx+1), '$c1_{}$'.format(idx+1), read_point_c1,
-                                    write_point_c1, 'log', False, self.cppmbounds)
+            self.add_fittable_param('c1_w{}'.format(idx+1), '$c1_w{}$'.format(idx+1), read_point_c1,
+                                    write_point_c1, 'linear', False, self.cppmbounds)
 
             def read_point_c3(self, idx=idx):
                 return self.list_c3[idx]
             def write_point_c3(self, value, idx=idx):
                 self.list_c3[idx] = value
-            self.add_fittable_param('c3_{}'.format(idx+1), '$c3_{}$'.format(idx+1), read_point_c3,
-                                    write_point_c3, 'log', False, self.cppmbounds)
+            self.add_fittable_param('c3_w{}'.format(idx+1), '$c3_w{}$'.format(idx+1), read_point_c3,
+                                    write_point_c3, 'linear', False, self.cppmbounds)
 
             def read_point_c2(self, idx=idx):
                 return self.list_c2[idx]
             def write_point_c2(self, value, idx=idx):
                 self.list_c2[idx] = value
-            self.add_fittable_param('c2_{}'.format(idx+1), '$c2_{}$'.format(idx+1), read_point_c2,
+            self.add_fittable_param('c2_w{}'.format(idx+1), '$c2_w{}$'.format(idx+1), read_point_c2,
                                     write_point_c2, 'linear', False, self.cradbounds)
             
             def read_point_c4(self, idx=idx):
                 return self.list_c4[idx]
             def write_point_c4(self, value, idx=idx):
                 self.list_c4[idx] = value
-            self.add_fittable_param('c4_{}'.format(idx+1), '$c4_{}$'.format(idx+1), read_point_c4,
+            self.add_fittable_param('c4_w{}'.format(idx+1), '$c4_w{}$'.format(idx+1), read_point_c4,
                                     write_point_c4, 'linear', False, self.cradbounds)
 
             def read_point_e0(self, idx=idx):
                 return self.list_e0[idx]
             def write_point_e0(self, value, idx=idx):
                 self.list_e0[idx] = value
-            self.add_fittable_param('e0_{}'.format(idx+1), '$e0_{}$'.format(idx+1), read_point_e0,
+            self.add_fittable_param('e0_w{}'.format(idx+1), '$e0_w{}$'.format(idx+1), read_point_e0,
                                     write_point_e0, 'linear', False, [0,1])                        
             
     def collect_fitting_parameters(self):

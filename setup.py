@@ -16,7 +16,11 @@ install_requires = ['numpy',
                     'pybtex',
                     'nestle',
                     'h5py',
-                    'tabulate', ]
+                    'tabulate',
+                    'taurex',
+                    'pandas',
+                    'exotethys',
+                    'click' ]
 
 console_scripts = ['pop=pop.pop:main',]
 

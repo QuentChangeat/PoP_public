@@ -11,20 +11,9 @@ def CustomProfile(config, planet=None, star=None, optimizer=None, model=None, ob
 
     # Get the pipelines
     pipeObs = prepare_observation(filepath, planet, star, params_obs)
-    #pipeModel = prepare_modelpipe(numramp, planet, star)
 
     # Create the model
-    #from pop.model.pcmodel import PhaseOrbitalModel
-    #model = PhaseOrbitalModel(planet=planet,
-    #            star = star,
-    #            observation=pipeObs,
-    #            modelpipe = None,
-    #            stellar_grid = 'Phoenix_2012_13',
-    #            passbands = 'uniform_phoenix_2012_13')
-    #model.build()
     model = prepare_model(planet, star, pipeObs, parser = parser)
-    
-    ## this is to avoid cataclismic crash if log fit as fp_fs = 0 by default
     
     if show_params:
         from pop.pop import show_parameters
@@ -115,10 +104,7 @@ def parse_config(config):
     return param_obs
 
 def prepare_model(planet, star, pipeObs, parser, pipeModel=None):
-    #from pop.model import PhaseOrbitalModel
-    #model = PhaseOrbitalModel(planet=planet,
-    #                star = star,
-    #                observation=pipeObs)
+
     from pop.pipeline import ObservationPipeline
     from pop.pipeline.units import IamUselessUnit
 
@@ -131,13 +117,13 @@ def prepare_model(planet, star, pipeObs, parser, pipeModel=None):
 
     model = parser.generate_model(planet=planet, star=star, obs=pipeObs, modelpipe=pipeModel)
     model.build()
+    
     ## this is to avoid cataclismic crash if log fit as fp_fs = 0 by default
-    model['fp_fs_1'] = 1e-15
+    model['fp_fs_w1'] = 1e-15
     try:
-        model['rp_rs_1'] = 1e-15
+        model['rp_rs_w1'] = 1e-15
     except:
-        model['rp_rs2_1'] = 0.015
-    #model['rp_rs_1'] = 1e-30
+        model['rp_rs2_w1'] = 0.015
     for p in param_model:
         try:
             model[p] = param_model[p]
@@ -169,31 +155,21 @@ def prepare_observation(filepath, planet, star, params=[], idx='white'):
 
     return pipeObs
 
-#def prepare_modelpipe(numramp, planet, star):
-#    from pop.pipeline import ObservationPipeline
-#    from pop.pipeline.units import HSTRampsUnit, NormalizingUnit
-    
-#    hstRamp = HSTRampsUnit('hstramp', num_exp_ramp=numramp)
-#    hstNorm = NormalizingUnit('hstnorm')
-#    pipeModel = ObservationPipeline(units=[hstRamp, hstNorm], order=['hstnorm','hstramp',], planet=planet, star=star)
-    
-#    return pipeModel
-
 def default_opimization(optimizer):
 
     optimizer.disable_fit('planet_radius')
 
-    optimizer.disable_fit('fp_fs_1')
-    optimizer.set_boundary('fp_fs_1',[1e-5,1e-2])
-    optimizer.set_mode('fp_fs_1','log')
+    optimizer.disable_fit('fp_fs_w1')
+    optimizer.set_boundary('fp_fs_w1',[1e-5,1e-2])
+    optimizer.set_mode('fp_fs_w1','log')
     try:
-        optimizer.disable_fit('rp_rs_1')
-        optimizer.set_boundary('rp_rs_1',[1e-3,0.5])
-        optimizer.set_mode('rp_rs_1','log')
+        optimizer.disable_fit('rp_rs_w1')
+        optimizer.set_boundary('rp_rs_w1',[1e-3,0.5])
+        optimizer.set_mode('rp_rs_w1','log')
     except:
-        optimizer.disable_fit('rp_rs2_1')
-        optimizer.set_boundary('rp_rs2_1',[1e-7,0.1])
-        optimizer.set_mode('rp_rs2_1','log')
+        optimizer.disable_fit('rp_rs2_w1')
+        optimizer.set_boundary('rp_rs2_w1',[1e-7,0.1])
+        optimizer.set_mode('rp_rs2_w1','log')
 
     
     mid_min = optimizer._model['mid_time']-0.1
@@ -201,44 +177,6 @@ def default_opimization(optimizer):
     optimizer.enable_fit('mid_time')
     optimizer.set_boundary('mid_time',[mid_min,mid_max])
     
-    import numpy as np
-    off = np.median(optimizer._observed.spectrum)
-    #optimizer._observed['sys_normF'] = off
-    #optimizer._observed['sys_normR'] = off
-    #bounds = [10**(np.log10(off)-1), 10**(np.log10(off)+1)]
-
-    #optimizer.enable_fit('sys_normF')
-    #optimizer.set_boundary('sys_normF',bounds)
-    #optimizer.set_mode('sys_normF','log')
-
-    #optimizer.enable_fit('sys_normR')
-    #optimizer.set_boundary('sys_normR',bounds)
-    #optimizer.set_mode('sys_normR','log')
-
-    #optimizer.enable_fit('sys_expAF')
-    #optimizer.set_boundary('sys_expAF',[1e-5,1e-1])
-    #optimizer.set_mode('sys_expAF','log')
-
-    #optimizer.enable_fit('sys_expAR')
-    #optimizer.set_boundary('sys_expAR',[1e-5,1e-1])
-    #optimizer.set_mode('sys_expAR','log')
-
-    #optimizer.enable_fit('sys_expBF')
-    #optimizer.set_boundary('sys_expBF',[1,1e4])
-    #optimizer.set_mode('sys_expBF','log')
-
-    #optimizer.enable_fit('sys_expBR')
-    #optimizer.set_boundary('sys_expBR',[1,1e4])
-    #optimizer.set_mode('sys_expBR','log')
-
-    #optimizer.enable_fit('sys_linF')
-    #optimizer.set_boundary('sys_linF',[-0.02,0.02])
-    #optimizer.set_mode('sys_linF','linear')
-    
-    #optimizer.enable_fit('sys_linR')
-    #optimizer.set_boundary('sys_linR',[-0.02,0.02])
-    #optimizer.set_mode('sys_linR','linear')
-
     return optimizer
 
 def save_results_to_dict(dico, result, sols, save_sols=True, res_label=''):

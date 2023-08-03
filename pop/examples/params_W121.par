@@ -1,0 +1,139 @@
+[Planet]
+planet_type = cataloguefile+Simple
+catalogue_path = /Users/qchangeat/Documents/Software/Inputs/FULL_LIST.csv
+planet_name = "WASP-121 b"
+orbital_period = 1.27492504
+planet_distance = 0.0256
+inclination = 87.51
+
+[Star]
+star_type = cataloguefile+phoenix
+catalogue_path = /Users/qchangeat/Documents/Software/Inputs/FULL_LIST.csv
+planet_name = "WASP-121 b"
+phoenix_path= /Users/qchangeat/Documents/Software/Inputs/phoenix
+metallicity = 0.0
+radius = 1.458
+mass = 1.358
+temperature = 6459.
+
+[Model]
+model_type = plc_phase
+stellar_grid = "Phoenix_2012_13"
+passbands = "uniform_phoenix_2012_13"
+
+[Observation]
+iraclis_file = "WASP121_observation_IRACLIS_LowRes1_filt.pickle"
+num_removed_orbits = 0,
+num_removed_exposures = 1
+
+expfactorAF=-0.0007, 
+expfactorBF=0.005, 
+linfactorF= 1e-30, 1e-30, 1e-30, 
+quadfactorF = 0.0, 0.0, 0.0, 
+normF=1., 1.0, 1.0 , 
+expfactorAR=1e-30,
+expfactorBR=1,
+linfactorR= 1e-30, 1e-30, 1e-30, 
+quadfactorR = 0.0, 0.0, 0.0, 
+normR=1., 1.0, 1.0, 
+segment_times= 2458190.229, 2458190.83, 2458191.49, 
+visit_times = 2458190.229,  
+renormalize_errors = False
+
+[Overide]
+mid_time = 2458518.7722135773
+c3_1 = 5.3e-05
+c4_1 = 1.48
+
+[Optimizer]
+optimizer = nestle
+num_live_points=50
+method = classic
+
+[Fitting]
+mid_time:fit = False
+mid_time:bounds = 2458518.6999999997,2458518.9
+
+orbital_period:fit = False
+orbital_period:bounds = 1.2, 1.4
+orbital_period:mode = linear
+
+planet_distance:fit = False
+planet_distance:bounds = 0.024, 0.028
+planet_distance:mode = linear
+
+impact_param:fit = False
+impact_param:bounds = 0.001, 0.25
+impact_param:mode = linear
+
+inclination:fit = False
+inclination:bounds = 50.0, 90.0
+inclination:mode = linear
+
+rp_rs2_w1:fit = True
+rp_rs2_w1:bounds = 0.012, 0.016
+rp_rs2_w1:mode = linear
+
+c0_w1:fit = True
+c0_w1:bounds = 0.0, 0.003
+
+c1_w1:fit = True
+c1_w1:bounds = 0.0, 0.003
+
+c2_w1:fit = True
+c2_w1:bounds = -0.9, 0.4
+
+c3_w1:fit = False
+
+c4_w1:fit = False
+
+sys_expAF_vis0:fit = True
+sys_expAF_vis0:bounds = -0.15, -0.0001
+sys_expAF_vis0:mode = linear
+
+sys_expBF_vis0:fit = True
+sys_expBF_vis0:bounds = 0.0001, 0.01
+sys_expBF_vis0:mode = linear
+
+#sys_expAF_vis1:fit = True
+#sys_expAF_vis1:bounds = -0.0015, -0.0001
+#sys_expAF_vis1:mode = linear
+
+#sys_expBF_vis1:fit = True
+#sys_expBF_vis1:bounds = 0.0001, 0.01
+#sys_expBF_vis1:mode = linear
+
+sys_normF_seg0:fit = True
+sys_normF_seg0:bounds = 0.9, 1.1
+sys_normF_seg0:mode = linear
+
+sys_linF_seg0:fit = True
+sys_linF_seg0:bounds = -1e-2, 1e-2
+sys_linF_seg0:mode = linear
+
+sys_quadF_seg0:fit = True
+sys_quadF_seg0:bounds = -2e-2, 2e-2
+sys_quadF_seg0:mode = linear
+
+sys_normF_seg1:fit = True
+sys_normF_seg1:bounds = 0.9, 1.1
+sys_normF_seg1:mode = linear
+
+sys_linF_seg1:fit = True
+sys_linF_seg1:bounds = -1e-2, 1e-2
+sys_linF_seg1:mode = linear
+
+sys_quadF_seg1:fit = False
+
+sys_normF_seg2:fit = True
+sys_normF_seg2:bounds = 0.9, 1.1
+sys_normF_seg2:mode = linear
+
+sys_linF_seg2:fit = True
+sys_linF_seg2:bounds = -1e-2, 1e-2
+sys_linF_seg2:mode = linear
+
+sys_quadF_seg2:fit = False
+
+sys_inf:fit = False
+
