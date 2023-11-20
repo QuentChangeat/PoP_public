@@ -25,3 +25,9 @@ pip install .
 
 For examples on how to run the code, see the PoP_public/examples directory.
 
+## References
+
+If you are using this code for your own research, please consider citing the following:
+- TauREx3 reference paper: [Al-Refaie et al. 2021](https://arxiv.org/abs/1912.07759).
+- TauREx3.1 plugin paper: [Al-Refaie et al. 2022](https://arxiv.org/abs/2110.01271).
+- PoP reference paper: [Changeat et al. 2023](TBD)
