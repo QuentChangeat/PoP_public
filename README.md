@@ -28,7 +28,7 @@ For examples on how to run the code, see the PoP_public/examples directory.
 ## References
 
 If you are using this code for your own research, please consider citing the following:
-- PoP reference paper: [Changeat et al. 2023](TBD)
+- PoP reference paper: [Changeat et al. 2023](https://arxiv.org/abs/2401.01465).
 
 Associated papers:
 - TauREx3 reference paper: [Al-Refaie et al. 2021](https://arxiv.org/abs/1912.07759).
